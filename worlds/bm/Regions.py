@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from BaseClasses import Region, Location
-from .Locations import as_dict, area1list, area1hoverloc, area2list, area2boss, area3list, area4list, area5list, area6list, area7list, area8list
+from .Locations import as_dict, area1list, area1hoverloc, area2list, area2boss, area2pathto7, area2hoverloc, area3list, area3wall1crush, area4boss, area5list, area6list, area7list, area8list
 from .Items import listA
 from . import BMLocation
 from .Rules import *
@@ -22,12 +22,15 @@ def create_regions(self) -> None:
     area1_hover = Region("Area 1 Hover Cliffs", self.player, self.multiworld)
     area2_region = Region("Area 2", self.player, self.multiworld)
     area2_boss = Region("Area 2 Boss Room", self.player, self.multiworld)
-    area2_boss = Region("Area 2 Boss Room", self.player, self.multiworld)
+    area2to7_region = Region("Area 2 to 7 Pathway", self.player, self.multiworld)
+    area2_lavahover = Region("Area 2 Lava Room Hover (Top Right)", self.player, self.multiworld)
     area3_region = Region("Area 3", self.player, self.multiworld)
+    area3_wallcrush = Region("Area 3 Behind Crusher Blocks", self.player, self.multiworld)
     area4_region = Region("Area 4", self.player, self.multiworld)
-    # area4_boss = Region("Area 4 Boss", self.player, self.multiworld)
+    area4_boss = Region("Area 4 Boss Room", self.player, self.multiworld)
     area5_region = Region("Area 5", self.player, self.multiworld)
     area6_region = Region("Area 6", self.player, self.multiworld)
+    area6_entrance = Region("Area 6 Entrance", self.player, self.multiworld)
     area7_region = Region("Area 7", self.player, self.multiworld)
     area8_region = Region("Area 8", self.player, self.multiworld)
 
@@ -35,9 +38,11 @@ def create_regions(self) -> None:
     area1_hover.add_locations({name : lid for name, lid in as_dict.items() if name in area1hoverloc}, BMLocation)
     area2_region.add_locations({name : lid for name, lid in as_dict.items() if name in area2list}, BMLocation)
     area2_boss.add_locations({name : lid for name, lid in as_dict.items() if name in area2boss}, BMLocation)
+    area2_lavahover.add_locations({name : lid for name, lid in as_dict.items() if name in area2hoverloc}, BMLocation)
+    area2to7_region.add_locations({name : lid for name, lid in as_dict.items() if name in area2pathto7}, BMLocation)
     area3_region.add_locations({name : lid for name, lid in as_dict.items() if name in area3list}, BMLocation)
-    area4_region.add_locations({name : lid for name, lid in as_dict.items() if name in area4list}, BMLocation)
-    # area4_boss.add_locations({name : lid for name, lid in as_dict.items() if name in area4boss}, BMLocation)
+    area3_wallcrush.add_locations({name : lid for name, lid in as_dict.items() if name in area3wall1crush}, BMLocation)
+    area4_boss.add_locations({name : lid for name, lid in as_dict.items() if name in area4boss}, BMLocation)
     area5_region.add_locations({name : lid for name, lid in as_dict.items() if name in area5list}, BMLocation)
     area6_region.add_locations({name : lid for name, lid in as_dict.items() if name in area6list}, BMLocation)
     area7_region.add_locations({name : lid for name, lid in as_dict.items() if name in area7list}, BMLocation)
@@ -52,32 +57,42 @@ def create_regions(self) -> None:
     area1_region.connect(area2_region, rule=lambda state : can_hyper(state, self.player))
     area1_region.connect(area1_hover, rule=lambda state : can_hover(state, self.player))
     area1_hover.connect(area4_region, rule=lambda state : can_hover(state, self.player or (can_wall1 and can_wall2)))
-    area1_hover.connect(area1_region)
+    area1_hover.connect(area1_region, rule=lambda state : can_hover(state, self.player or (can_wall1 and can_wall2)))
 
     area2_region.connect(area1_region, rule=lambda state : can_crusher(state, self.player))
+    area2_region.connect(area2_lavahover, rule=lambda state : can_hover(state, self.player))
+    area2_lavahover.connect(area2_region, rule=lambda state : can_hover(state, self.player))
     area2_region.connect(area2_boss)
     area2_boss.connect(area2_region)
 
     area2_region.connect(area3_region, rule=lambda state : can_crusher(state, self.player))
-    area2_region.connect(area7_region, rule=lambda state : can_wall1(state, self.player))
+    area2_region.connect(area2to7_region, rule=lambda state : can_wall1(state, self.player))
+    area2to7_region.connect(area7_region, rule=lambda state : (can_crusher(state, self.player) and can_wall1(state, self.player)))
+    area2to7_region.connect(area2_region)
 
     area3_region.connect(area2_region, rule=lambda state : can_crusher(state, self.player))
+    area3_region.connect(area3_wallcrush, rule=lambda state : can_crusher(state, self.player) and can_wall1(state, self.player))
+    area3_wallcrush.connect(area3_region, rule=lambda state : can_crusher(state, self.player) and can_wall1(state, self.player))
     area3_region.connect(area8_region, rule=lambda state : can_wall1(state, self.player) and can_wall2(state, self.player) and can_crusher(state, self.player) and can_hover(state, self.player))
 
-    area4_region.connect(area1_hover)
+    area4_region.connect(area1_hover, rule=lambda state : can_hover(state, self.player))
+    area4_region.connect(area4_boss, rule=lambda state : can_hover(state, self.player or (can_wall1 and can_wall2)))
+    area4_boss.connect(area4_region, rule=lambda state : can_hover(state, self.player or (can_wall1 and can_wall2)))
     area4_region.connect(area5_region, rule=lambda state : can_key(state, self.player))
 
     area5_region.connect(area4_region, rule=lambda state : can_key(state, self.player))
-    area5_region.connect(area6_region, rule=lambda state : can_dive(state, self.player))
+    area5_region.connect(area6_entrance, rule=lambda state : can_dive(state, self.player))
 
-    area6_region.connect(area5_region, rule=lambda state : can_dive(state, self.player))
+    area6_entrance.connect(area5_region, rule=lambda state : can_dive(state, self.player))
+    area6_entrance.connect(area6_region, rule=lambda state : can_crusher(state, self.player))
+    area6_region.connect(area6_entrance, rule=lambda state : can_crusher(state, self.player))
 
-    area7_region.connect(area2_region)
+    area7_region.connect(area2to7_region, rule=lambda state : (can_crusher(state, self.player) and can_wall1(state, self.player)))
 
     area8_region.connect(area3_region, rule=lambda state : can_wall1(state, self.player) and can_wall2(state, self.player))
     # connects the "Menu" and "Main Area", can also pass a rule
     #Item Placement
-    self.multiworld.get_location("Hyper Beam Pickup", self.player).place_locked_item(self.create_item("Hyper Beam"))
+    #self.multiworld.get_location("Hyper Beam Pickup", self.player).place_locked_item(self.create_item("Hyper Beam"))
     #print(self.multiworld.get_location("Hyper Beam Pickup", self.player).item.code)
     # or
     # main_region.add_exits({"Area 3": "Boss Door"}, {"Area 3": lambda state: state.has("Hyper Beam", self.player)})

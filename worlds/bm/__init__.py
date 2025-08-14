@@ -80,7 +80,7 @@ class BMWorld(World):
         # If this is not the case we want to fill the itempool with junk.
         junk = len(self.multiworld.get_unfilled_locations(self.player)) - len(self.itempool) # calculate this based on player options
         self.multiworld.itempool += [self.create_item(random.choice(listB)) for _ in range(junk)]
-        self.multiworld.completion_condition[self.player] = lambda state: state.can_reach_location("Crusher Beam Pickup", self.player)
+        self.multiworld.completion_condition[self.player] = lambda state: state.can_reach_location("Underworld Lord Defeated", self.player)
 
     def create_regions(self):
         create_regions(self)
