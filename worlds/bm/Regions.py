@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from BaseClasses import Region, Location
-from .Locations import as_dict, area1list, area1hoverloc, area2list, area2boss, area2pathto7, area2hoverloc, area3list, area3wall1crush, area4boss, area5list, area6list, area7list, area8list
+from .Locations import as_dict, area1list, area1hoverloc, area2list, area2boss, area2pathto7, area2hoverloc, area3list, area3wall1crush, area4boss, area5list, area6list, area7list, area8list, area8bosslist
 from .Items import listA
 from . import BMLocation
 from .Rules import *
@@ -30,9 +30,9 @@ def create_regions(self) -> None:
     area4_boss = Region("Area 4 Boss Room", self.player, self.multiworld)
     area5_region = Region("Area 5", self.player, self.multiworld)
     area6_region = Region("Area 6", self.player, self.multiworld)
-    area6_entrance = Region("Area 6 Entrance", self.player, self.multiworld)
     area7_region = Region("Area 7", self.player, self.multiworld)
     area8_region = Region("Area 8", self.player, self.multiworld)
+    area8_boss = Region("Area 8 Boss Room", self.player, self.multiworld)
 
     area1_region.add_locations({name : lid for name, lid in as_dict.items() if name in area1list}, BMLocation)
     area1_hover.add_locations({name : lid for name, lid in as_dict.items() if name in area1hoverloc}, BMLocation)
@@ -47,6 +47,7 @@ def create_regions(self) -> None:
     area6_region.add_locations({name : lid for name, lid in as_dict.items() if name in area6list}, BMLocation)
     area7_region.add_locations({name : lid for name, lid in as_dict.items() if name in area7list}, BMLocation)
     area8_region.add_locations({name : lid for name, lid in as_dict.items() if name in area8list}, BMLocation)
+    area8_boss.add_locations({name : lid for name, lid in as_dict.items() if name in area8bosslist}, BMLocation)
     # add event to Boss Room
     # boss_region.locations.append(BMLocation(self.player, "Final Boss", None, boss_region))
 
@@ -81,18 +82,30 @@ def create_regions(self) -> None:
     area4_region.connect(area5_region, rule=lambda state : can_key(state, self.player))
 
     area5_region.connect(area4_region, rule=lambda state : can_key(state, self.player))
-    area5_region.connect(area6_entrance, rule=lambda state : can_dive(state, self.player))
+    area5_region.connect(area6_region, rule=lambda state : can_dive(state, self.player))
 
-    area6_entrance.connect(area5_region, rule=lambda state : can_dive(state, self.player))
-    area6_entrance.connect(area6_region, rule=lambda state : can_crusher(state, self.player))
-    area6_region.connect(area6_entrance, rule=lambda state : can_crusher(state, self.player))
+    area6_region.connect(area5_region, rule=lambda state : can_dive(state, self.player) and can_crusher(state, self.player))
 
     area7_region.connect(area2to7_region, rule=lambda state : (can_crusher(state, self.player) and can_wall1(state, self.player)))
 
     area8_region.connect(area3_region, rule=lambda state : can_wall1(state, self.player) and can_wall2(state, self.player))
+    area8_region.connect(area8_boss, rule=lambda state : can_wall1(state, self.player) and can_wall2(state, self.player))
     # connects the "Menu" and "Main Area", can also pass a rule
     #Item Placement
-    #self.multiworld.get_location("Hyper Beam Pickup", self.player).place_locked_item(self.create_item("Hyper Beam"))
+    boss_location_names = [
+        "Mother Brain (Boss 1) Defeated",
+        "Crabullus (Boss 2) Defeated",
+        "Photophage (Boss 3) Defeated",
+        "Fred (Boss 4) Defeated",
+        "Hard Shell (Boss 5) Defeated",
+        "Frozen Crabullus (Boss 6) Defeated",
+        "Solar-Enhanced Fred (Boss 7) Defeated",
+        "Plutonium Boss (Boss 8) Defeated"]
+
+    for location_name in boss_location_names:
+        self.multiworld.get_location(location_name, self.player).place_locked_item(self.create_item("Boss Medal"))
+
+    self.multiworld.get_location("Underworld Lord Defeated", self.player).place_locked_item(self.create_item("Victory"))
     #print(self.multiworld.get_location("Hyper Beam Pickup", self.player).item.code)
     # or
     # main_region.add_exits({"Area 3": "Boss Door"}, {"Area 3": lambda state: state.has("Hyper Beam", self.player)})

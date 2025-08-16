@@ -16,17 +16,16 @@ class StartingArea(Choice):
     option_area3 = 3
     default = 1  # default to normal
 
-
-class GunLevel(Range):
-    """Sets the Level of Your Blaster"""
-    display_name = "Gun Level"
-    range_start = 1
+class BossMedalCount(Range):
+    """Sets the amount of Bosses defeated to goal"""
+    display_name = "Boss Medals Required"
+    range_start = 0
     range_end = 8
-    default = 1
+    default = 0
 
 
 @dataclass
 class BMOptions(PerGameCommonOptions):
     starting_hover: StartingHover
     starting_area: StartingArea
-    gun_level: GunLevel
+    boss_medal: BossMedalCount
