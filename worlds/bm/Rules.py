@@ -16,8 +16,8 @@ def has_enough_medals(state : CollectionState, player : int, medals : int):
 def has_medals(medals : int):
     return lambda state, player : has_enough_medals(state, player, medals=medals)
 
-#def has_bossmedal(state: CollectionState, player: int) -> bool:
- #   return state.has("Boss Medal", player, world.options.boss_medal.value)
+def has_bossmedal(state: CollectionState, player: int) -> bool:
+    return state.has("Boss Medal", player, 7)
 
 def can_hyper(state: CollectionState, player: int) -> bool:
     return state.has("Hyper Beam", player)
