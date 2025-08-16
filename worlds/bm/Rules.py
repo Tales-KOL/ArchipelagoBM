@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 #       apply_location_rules(world, "Underworld Lord Defeated", lambda state: state.has("Boss Medal", world.player, world.options.boss_medal.value))
 
 def has_bossmedal(state: CollectionState, player: int) -> bool:
-    return state.has("Boss Medal", player, 1)
+    return state.has("Boss Medal", player, 2)
 
 def can_hyper(state: CollectionState, player: int) -> bool:
     return state.has("Hyper Beam", player)
