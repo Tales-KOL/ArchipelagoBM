@@ -21,11 +21,11 @@ listA:list[str] = ["Hyper Beam",
                       "Key",
                       "Dive Engine",
                       "Wall 1",
-                      "Wall 2",
-                      "Boss Medal",
-                      "Victory"]
-listB:list[str] = ["Junk Item #9000",
-                     "Item That Does Nothing",
-                   "Waste Of Space"]
+                      "Wall 2"]
+listB:list[str] = [ "Gun4",
+                    "Power4",
+                    "Hover4"]
+listC:list[str] = ["Boss Medal",
+                     "Victory"]
 
-itemnametoid :dict[str, int] = {name: id+1 for id, name in enumerate([*listA, *listB])}
+itemnametoid :dict[str, int] = {name: id+1 for id, name in enumerate([*listA, *listB, *listC])}
