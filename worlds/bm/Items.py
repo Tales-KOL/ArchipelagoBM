@@ -9,7 +9,7 @@ class BMItem(Item):  # or from Items import MyGameItem
 
 
 def is_progression(item):
-    return item in listA
+    return item in [*listA, *listC]
 
 def create_event(self, event: str) -> BMItem:
     # while we are at it, we can also add a helper to create events

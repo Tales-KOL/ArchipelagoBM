@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 from BaseClasses import Region, Location
 from .Locations import as_dict, area8boss, area1list, area1hoverloc, area2list, area2boss, area2pathto7, area2hoverloc, area3list, area3wall1crush, area4boss, area5list, area6list, area7list, area8list
-from .Items import listA
+from .Items import listC
 from . import BMLocation
 from .Rules import *
 

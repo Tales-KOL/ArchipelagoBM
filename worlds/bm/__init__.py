@@ -3,7 +3,7 @@
 import settings, typing, random
 from BaseClasses import ItemClassification, Tutorial, MultiWorld
 from .Options import BMOptions  # the options we defined earlier
-from .Items import itemnametoid, BMItem, is_progression, listA, listB  # data used below to add items to the World
+from .Items import itemnametoid, BMItem, is_progression, listA, listB, listC  # data used below to add items to the World
 from .Locations import BMLocation, as_dict  # same as above
 from .Regions import create_regions
 from . import Regions
