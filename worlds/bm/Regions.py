@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from BaseClasses import Region, Location
-from .Locations import as_dict, area1list, area1hoverloc, area2list, area2boss, area2pathto7, area2hoverloc, area3list, area3wall1crush, area4boss, area5list, area6list, area7list, area8list
+from .Locations import as_dict, area8boss, area1list, area1hoverloc, area2list, area2boss, area2pathto7, area2hoverloc, area3list, area3wall1crush, area4boss, area5list, area6list, area7list, area8list
 from .Items import listA
 from . import BMLocation
 from .Rules import *
@@ -32,6 +32,7 @@ def create_regions(self) -> None:
     area6_region = Region("Area 6", self.player, self.multiworld)
     area7_region = Region("Area 7", self.player, self.multiworld)
     area8_region = Region("Area 8", self.player, self.multiworld)
+    area8_boss = Region("Area 8 Boss Room", self.player, self.multiworld)
 
     area1_region.add_locations({name : lid for name, lid in as_dict.items() if name in area1list}, BMLocation)
     area1_hover.add_locations({name : lid for name, lid in as_dict.items() if name in area1hoverloc}, BMLocation)
@@ -46,6 +47,7 @@ def create_regions(self) -> None:
     area6_region.add_locations({name : lid for name, lid in as_dict.items() if name in area6list}, BMLocation)
     area7_region.add_locations({name : lid for name, lid in as_dict.items() if name in area7list}, BMLocation)
     area8_region.add_locations({name : lid for name, lid in as_dict.items() if name in area8list}, BMLocation)
+    area8_boss.add_locations({name : lid for name, lid in as_dict.items() if name in area8boss}, BMLocation)
     # add event to Boss Room
     # boss_region.locations.append(BMLocation(self.player, "Final Boss", None, boss_region))
 
@@ -87,6 +89,7 @@ def create_regions(self) -> None:
     area7_region.connect(area2to7_region, rule=lambda state : (can_crusher(state, self.player) and can_wall1(state, self.player)))
 
     area8_region.connect(area3_region, rule=lambda state : can_wall1(state, self.player) and can_wall2(state, self.player))
+    area8_region.connect(area8_boss)
     # connects the "Menu" and "Main Area", can also pass a rule
     #Item Placement
     boss_location_names = [

@@ -21,12 +21,12 @@ area5list:list[str] = ["Area 5 Dive Upgrade", "Hard Shell (Boss 5) Defeated"]
 area6list:list[str] = ["Area 6 Wall 1 Upgrade", "Frozen Crabullus (Boss 6) Defeated", "Area 6 (Behind Blocks) - H-Missile Pickup #1", "Area 6 (Behind Blocks) - H-Missile Pickup #2"]
 area7list:list[str] = ["Area 7 Wall 2 Upgrade", "Solar-Enhanced Fred (Boss 7) Defeated", "Area 7 (Outside Boss Room) - Gun4 Pickup", "Area 7 (4th Section Bottom Right) - Power Pickup", "Area 7 (4th Section Bottom Right) - Thunder Break Pickup",
                        "Boss 7 Room (1st Walkway) - Power4 Pickup", "Boss 7 Room (1st Walkway) - Gun4 Pickup", "Boss 7 Room (3rd Walkway) - Gun4 Pickup", "Boss 7 Room (Before Boss) - Power Pickup"]
-area8list:list[str] = ["Plutonium Boss (Boss 8) Defeated", "Underworld Lord Defeated", "Area 8 (Top Right Room End) - Thunder Break Pickup", "Area 8 (Top Right Room End) - Hover4 Pickup #1", "Area 8 (Top Right Room End) - Hover4 Pickup #2",
+area8list:list[str] = ["Plutonium Boss (Boss 8) Defeated", "Area 8 (Top Right Room End) - Thunder Break Pickup", "Area 8 (Top Right Room End) - Hover4 Pickup #1", "Area 8 (Top Right Room End) - Hover4 Pickup #2",
                        "Area 8 (Top Right Room End) - Power4 Pickup", "Area 8 (Top Right Room End) - H-Missile Pickup #1", "Area 8 (Top Right Room End) - H-Missile Pickup #2", "Area 8 (Bottom Right Room End) - H-Missile Pickup #1",
                        "Area 8 (Bottom Right Room End) - H-Missile Pickup #2", "Area 8 (Bottom Right Room End) - Hover Pickup", "Area 8 (Bottom Right Room End) - Hover4 Pickup"]
+area8boss:list[str] = ["Underworld Lord Defeated"]
 
-
-as_dict :dict[str, int] = {name: id+1 for id, name in enumerate([*area1list, *area1hoverloc, *area2list, *area2boss, *area2pathto7, *area2hoverloc, *area3list, *area3wall1crush, *area4boss, *area5list, *area6list, *area7list, *area8list])}
+as_dict :dict[str, int] = {name: id+1 for id, name in enumerate([*area1list, *area1hoverloc, *area2list, *area2boss, *area2pathto7, *area2hoverloc, *area3list, *area3wall1crush, *area4boss, *area5list, *area6list, *area7list, *area8list, *area8boss])}
 
 
 
