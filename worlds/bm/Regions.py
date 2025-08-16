@@ -99,8 +99,7 @@ def create_regions(self) -> None:
         "Fred (Boss 4) Defeated",
         "Hard Shell (Boss 5) Defeated",
         "Frozen Crabullus (Boss 6) Defeated",
-        "Solar-Enhanced Fred (Boss 7) Defeated",
-        "Plutonium Boss (Boss 8) Defeated"]
+        "Solar-Enhanced Fred (Boss 7) Defeated"]
 
     for location_name in boss_location_names:
         self.multiworld.get_location(location_name, self.player).place_locked_item(self.create_item("Boss Medal"))

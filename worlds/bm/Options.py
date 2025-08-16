@@ -20,8 +20,8 @@ class BossMedalCount(Range):
     """Sets the amount of Bosses defeated to goal"""
     display_name = "Boss Medals Required"
     range_start = 0
-    range_end = 8
-    default = 8
+    range_end = 7
+    default = 7
 
 
 @dataclass
