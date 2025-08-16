@@ -1,5 +1,4 @@
 from BaseClasses import CollectionState
-from test.hosting import world
 from worlds.generic.Rules import set_rule, add_rule
 from typing import TYPE_CHECKING
 
@@ -7,12 +6,12 @@ if TYPE_CHECKING:
     from . import BMWorld
 
 #def apply_location_rules(world, target, rule):
-  #  add_rule(world.multiworld.get_location(target, world.player), rule)
+#    add_rule(world.multiworld.get_location(target, world.player), rule)
 
-  #  if len(world.options.boss_medal.value) > 0:
-   #     apply_location_rules(world, "Underworld Lord Defeated", lambda state: state.has("Boss Medal", world.player, world.options.boss_medal.value))
+#    if len(world.options.boss_medal.value) > 0:
+#       apply_location_rules(world, "Underworld Lord Defeated", lambda state: state.has("Boss Medal", world.player, world.options.boss_medal.value))
 
-def has_bossmedals(state: CollectionState, player: int) -> bool:
+def has_bossmedal(state: CollectionState, player: int) -> bool:
     return state.has("Boss Medal", player, 8)
 
 def can_hyper(state: CollectionState, player: int) -> bool:

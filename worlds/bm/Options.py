@@ -21,7 +21,7 @@ class BossMedalCount(Range):
     display_name = "Boss Medals Required"
     range_start = 0
     range_end = 8
-    default = 0
+    default = 8
 
 
 @dataclass

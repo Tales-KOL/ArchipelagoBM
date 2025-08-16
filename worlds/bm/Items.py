@@ -22,9 +22,10 @@ listA:list[str] = ["Hyper Beam",
                       "Dive Engine",
                       "Wall 1",
                       "Wall 2",
-                      "Victory",
-                      "Boss Medal"]
+                      "Boss Medal",
+                      "Victory"]
 listB:list[str] = ["Junk Item #9000",
                      "Item That Does Nothing",
                    "Waste Of Space"]
+
 itemnametoid :dict[str, int] = {name: id+1 for id, name in enumerate([*listA, *listB])}
