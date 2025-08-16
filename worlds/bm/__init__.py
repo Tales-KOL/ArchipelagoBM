@@ -72,7 +72,7 @@ class BMWorld(World):
         # Having an item in the start inventory won't remove it from the pool.
         # If you want to do that, use start_inventory_from_pool
 
-        for item in map(self.create_item, [x for x in listA if x != "Victory" and "Boss Medal"]):
+        for item in map(self.create_item, [x for x in listA if x != "Victory" and x != "Boss Medal"]):
             self.itempool.append(item)
         self.multiworld.itempool.extend(self.itempool)
 

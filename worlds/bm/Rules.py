@@ -10,9 +10,14 @@ if TYPE_CHECKING:
 
 #    if len(world.options.boss_medal.value) > 0:
 #       apply_location_rules(world, "Underworld Lord Defeated", lambda state: state.has("Boss Medal", world.player, world.options.boss_medal.value))
+def has_enough_medals(state : CollectionState, player : int, medals : int):
+    return state.has("Boss Medal", player, medals)
 
-def has_bossmedal(state: CollectionState, player: int) -> bool:
-    return state.has("Boss Medal", player, 7)
+def has_medals(medals : int):
+    return lambda state, player : has_enough_medals(state, player, medals=medals)
+
+#def has_bossmedal(state: CollectionState, player: int) -> bool:
+ #   return state.has("Boss Medal", player, world.options.boss_medal.value)
 
 def can_hyper(state: CollectionState, player: int) -> bool:
     return state.has("Hyper Beam", player)

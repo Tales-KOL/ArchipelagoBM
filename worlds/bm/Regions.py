@@ -89,7 +89,8 @@ def create_regions(self) -> None:
     area7_region.connect(area2to7_region, rule=lambda state : (can_crusher(state, self.player) and can_wall1(state, self.player)))
 
     area8_region.connect(area3_region, rule=lambda state : can_wall1(state, self.player) and can_wall2(state, self.player))
-    area8_region.connect(area8_boss, rule=lambda state : can_key(state, self.player) and has_bossmedal(state, self.player))
+
+    area8_region.connect(area8_boss, rule=lambda state : has_medals(self.options.boss_medal.value))
     # connects the "Menu" and "Main Area", can also pass a rule
     #Item Placement
     boss_location_names = [
